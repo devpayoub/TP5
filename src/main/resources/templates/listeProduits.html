@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/4.3.1/css/bootstrap.min.css" />
+
+<head>
+	<meta charset="utf-8">
+	<title>Liste des Produits</title>
+</head>
+
+<body>
+	<div th:replace="Navbar"></div>
+	<div class="container">
+		<div class="card">
+			<div class="container mt-5">
+				<div class="card">
+					<div class="card-header">
+						Liste des Produits
+					</div>
+					<div class="card-body">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>Nom Produit</th>
+									<th>Prix</th>
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr th:each="prod : ${produits.content}">
+									<td th:text="${prod.idProduit}"></td>
+									<td th:text="${prod.nomProduit}"></td>
+									<td th:text="${prod.prixProduit}"></td>
+									<td>
+										<a class="btn btn-danger"
+											th:href="@{supprimerProduit(id=${prod.idProduit}, page=${currentPage}, size=${size})}"
+											onclick="return confirm('Etes-vous sûr ?')">Supprimer</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+
+						<ul class="pagination">
+							<li th:each="page, status : ${pages}" class="page-item">
+								<a th:class="${status.index==currentPage?'btn btn-primary':'btn' }"
+									th:href="@{ListeProduits(page=${status.index}, size=${size})}"
+									th:text="${status.index + 1}"></a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+</body>
+
+</html>
