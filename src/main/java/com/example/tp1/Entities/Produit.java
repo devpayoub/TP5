@@ -1,12 +1,22 @@
 package com.example.tp1.Entities;
 
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "Produit")
@@ -14,8 +24,19 @@ public class Produit {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idProduit;
+	
+	@NotNull
+	@Size (min = 4,max = 15)
 	private String nomProduit;
+	
+	@Min(value =10)
+	@Max(value = 10000)
 	private Double prixProduit;
+	
+	
+	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@PastOrPresent
 	private Date dateCreation;
 
 	@ManyToOne
